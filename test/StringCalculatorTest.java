@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,15 +8,25 @@ import static org.junit.Assert.assertEquals;
  */
 public class StringCalculatorTest {
 
+    private StringCalculator calculator;
+
+    @Before
+    public void initialize() {
+        calculator = new StringCalculator();
+    }
+
     @Test
     public void emptyStringShouldReturn0() {
-        StringCalculator calculator = new StringCalculator();
         assertEquals(calculator.add(""), 0);
     }
 
     @Test
     public void string1ShouldReturn1() {
-        StringCalculator calculator = new StringCalculator();
         assertEquals(calculator.add("1"), 1);
+    }
+
+    @Test
+    public void numbersCommaDelimitedShouldBeSummed() {
+        assertEquals(calculator.add("1,2"), 3);
     }
 }
