@@ -14,7 +14,11 @@ public class StringCalculator {
     }
 
     private int getSum(String[] numbers) {
-        return getInt(numbers[0]) + getInt(numbers[1]);
+        int sum = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            sum += getInt(numbers[i]);
+        }
+        return sum;
     }
 
     private int getInt(String number) {
