@@ -1,5 +1,7 @@
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +11,9 @@ import static org.junit.Assert.assertEquals;
 public class StringCalculatorTest {
 
     private StringCalculator calculator;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void initialize() {
@@ -29,7 +34,7 @@ public class StringCalculatorTest {
     @Test
     public void numbersCommaDelimitedShouldBeSummed() {
         assertEquals(calculator.add("1,2"), 3);
-        assertEquals(calculator.add("10,15"), 25);
+        assertEquals(25, calculator.add("10,15"));
     }
 
     @Test
@@ -42,5 +47,19 @@ public class StringCalculatorTest {
     public void threeNumbersDelimitedAnywayShouldBeSummed() {
         assertEquals(calculator.add("1,2,3"), 6);
         assertEquals(calculator.add("5\n2\n3"), 10);
+    }
+
+    @Test
+    public void negativeInputReturnsException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Negative input!");
+        calculator.add("-1");
+        calculator.add("-5,10\n-15");
+    }
+
+    @Test
+    public void numbersGreaterThan1000AreIgnored() {
+        assertEquals(calculator.add("5,12,1001"), 17);
+        assertEquals(calculator.add("14124,22\n4,1214"), 26);
     }
 }
